@@ -1,0 +1,165 @@
+@import 'bootstrap_scss/bootstrap.scss';
+
+html, body {
+  font-family: 'Mulish', sans-serif;
+}
+
+.table tbody tr.highlight {
+  background-color: #ddd;
+}
+
+#note { font-size: 164px; }
+.droptarget { background-color: #348781}
+div.confident { color: black; }
+div.vague { color: lightgrey; }
+#note { display: inline-block; height: 80px; text-align: left;}
+
+#detector { width: 100%; height: 80%; border: 4px solid gray; border-radius: 8px; text-align: center; padding-top: 10px;}
+#output { width: 100%; height: 42px; }
+#flat { display: none; }
+#sharp { display: none; }
+.flat #flat { display: inline; }
+.sharp #sharp { display: inline; }
+
+
+#particleContainer {
+  width: 1200px;
+  height: 1200px;
+  z-index: 4;
+}
+
+#pitchBoard {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  z-index: 2;
+}
+
+#songBoard {
+  position: absolute;
+  top: 15px;
+  left:20px;
+  z-index: 1;
+}
+
+@include media-breakpoint-up(xs) {
+
+    body {
+      font-size: .9rem !important;
+    }
+    .bigger-1 {
+      font-size: 1rem !important;
+    }
+    .bigger-2 {
+      font-size: 1.1rem !important;
+    }
+    .bigger-3 {
+      font-size: 1.2rem !important;
+    }
+    .bigger-4 {
+      font-size: 1.3rem !important;
+    }
+    .bigger-5 {
+      font-size: 1.5rem !important;
+    }
+    .smaller-1 {
+      font-size: .9rem !important;
+    }
+    .smaller-2 {
+      font-size: .8rem !important;
+    }
+    .smaller-3 {
+      font-size: .8rem !important;
+    }
+    .smaller-4 {
+      font-size: .8rem !important;
+    }
+    .smaller-5 {
+      font-size: .8rem !important;
+    }
+
+}
+
+
+@include media-breakpoint-up(md) {
+
+    body {
+      font-size: 1rem !important;
+    }
+    .bigger-1 {
+      font-size: 1.1rem !important;
+    }
+    .bigger-2 {
+      font-size: 1.2rem !important;
+    }
+    .bigger-3 {
+      font-size: 1.3rem !important;
+    }
+    .bigger-4 {
+      font-size: 1.4rem !important;
+    }
+    .bigger-5 {
+      font-size: 1.5rem !important;
+    }
+    .smaller-1 {
+      font-size: .9rem !important;
+    }
+    .smaller-2 {
+      font-size: .8rem !important;
+    }
+    .smaller-3 {
+      font-size: .8rem !important;
+    }
+    .smaller-4 {
+      font-size: .8rem !important;
+    }
+    .smaller-5 {
+      font-size: .8rem !important;
+    }
+
+}
+
+
+@include media-breakpoint-up(lg) {
+    
+    html, body {
+      font-size: 1rem !important;
+    }
+    .bigger-1 {
+    font-size: 1.2rem !important;
+    }
+    .bigger-2 {
+      font-size: 1.4rem !important;
+    }
+    .bigger-3 {
+      font-size: 1.6rem !important;
+    }
+    .bigger-4 {
+      font-size: 1.8rem !important;
+    }
+    .bigger-5 {
+      font-size: 2rem !important;
+    }
+    .smaller-1 {
+      font-size: .9rem !important;
+    }
+    .smaller-2 {
+      font-size: .8rem !important;
+    }
+    .smaller-3 {
+      font-size: .7rem !important;
+    }
+    .smaller-4 {
+      font-size: .5rem !important;
+    }
+    .smaller-5 {
+      font-size: .5rem !important;
+    }
+  
+}
+
+.lyricsDiv 
+{
+  position:relative;
+  z-index: 100;
+}

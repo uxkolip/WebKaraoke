@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,user-scalable=no,minimum-scale=1,maximum-scale=1">
+    <title>webKaraoke - accusonus</title>
+    <meta name="description" content="webKaraoke by accusonus is a fun online karaoke that measures the pitch of your voice when singing and rewards you for keeping your tone close to the singers'!"/>
+    <link rel="icon" type="image/png" sizes="16x16" href="https://dp5cgtrb0qdma.cloudfront.net/favicon.ico">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"> 
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/styles.css"/>
+  </head>
+  <body class="bg-dark">
+
+  	<div class="row-fluid">
+  		
+<p class="d-none">
+	<button onclick="this.innerText = togglePlayback()">use demo audio</button>
+	<button onclick="toggleLiveInput()">use live input</button>
+	<button onclick="withFilter= !withFilter">Filter test</button>
+	<button onclick="recording = false" pitches = [];>Record off</button>
+	<button onclick="recording = true; pitches = [];">Record on</button>
+	<button onclick="loadJSONFile('sounds/demo.json')">Load note data</button>
+	<button onclick="startKaraoke()">Start Karaoke!</button>
+	<button onclick="stopKaraoke()">Stop Karaoke!</button>
+</p>
+    
+
+	
+  	</div>
+
+  	<div class=" row-fluid bg-white border border-left-0 border-right-0 border-top-0 py-2">
+  		<div class="container-fluid">
+	  		<div class="row">
+			 	<div class="col-6">
+			 		<h1 class="bigger-2 font-weight-bold pt-1">webKaraoke 🎤🔥</h1>
+			 	</div>
+			 	<div class="col-6 text-right">
+			 		<a href="https://accusonus.com" target="_blank" title="Opens accusonus' website in a new tab.">
+			 			<img src="https://dp5cgtrb0qdma.cloudfront.net/sites/all/themes/accusonus_theme/assets/images/accusonus-logo.svg" alt="accusonus logo" class="img-fluid pt-2" style="max-height: 30px;" />
+			 		</a>
+			 	</div>
+			 </div>
+		</div>
+	</div>
+
+  	<div class="row-fluid ">
+  		<div class="container-fluid">
+	  		<div class="row">
+
+		  		<div class="col-8">
+
+				<div class="row">
+			          
+			          <div class="col-12 mx-auto text-center">
+			            <div id="particleContainer"></div>
+						    <div id="boards">
+                  <div class="position-absolute bg-white" style="height: 100vh; top: 0; width: 4px; left: 215px" ></div>
+						      <canvas id="pitchBoard" height="500px"></canvas>
+						      <canvas id="songBoard" width="937" height="600px"></canvas>
+						    </div>
+						    
+							<div id="detector" class="vague d-none" style="display: none !important">
+								<div class="pitch"><span id="pitch">--</span>Hz</div>
+								<div class="note"><span id="note">--</span></div>   
+								<canvas id="output" width="300" height="42"></canvas>
+								<div id="detune"><span id="detune_amt">--</span><span id="flat">cents &#9837;</span><span id="sharp">cents &#9839;</span></div>
+							</div>
+
+						    <div id="noteInfo" class="d-none">
+						      <h2 id="noteValue">_</h2>
+						      <p id="startTime">0</p>
+						      <p id="length"></p>
+						    </div>
+
+			            	<canvas id="waveform" width="512" height="200"></canvas>
+
+			          	</div>
+
+		        	</div>
+		  		</div>
+
+		  		<div class="col-4 bg-dark pb-5 lyricsDiv" style="height: 83.1vh; overflow-y: scroll;">
+		  			<p class="bigger-4 py-3 text-white font-weight-bold">I want to break free - Lyrics</p>
+
+		  			<div class="text-white bigger-3 pb-5">
+						I want to break free<br>
+						I want to break free<br>
+						I want to break free from your lies<br>
+						You're so self-satisfied, I don't need you<br>
+						I've got to break free<br>
+						God knows, God knows I want to break free<br>
+						<br>
+						I've fallen in love<br>
+						I've fallen in love for the first time<br>
+						And this time I know it's for real<br>
+						I've fallen in love, yeah<br>
+						God knows, God knows I've fallen in love<br>
+						<br>
+						It's strange but it's true, yeah<br>
+						I can't get over the way you love me like you do<br>
+						But I have to be sure<br>
+						When I walk out that door<br>
+						Oh, how I want to be free, baby<br>
+						Oh, how I want to be free<br>
+						Oh, how I want to break free<br>
+						<br>
+						But life still goes on<br>
+						I can't get used to living without, living without<br>
+						Living without you by my side<br>
+						I don't want to live alone, hey<br>
+						God knows, got to make it on my own<br>
+						So baby, can't you see?<br>
+						I've got to break free<br>
+						<br>
+						I've got to break free<br>
+						I want to break free, yeah<br>
+						I want, I want, I want, I want to break free
+					</div>
+
+					<div id="lyricsEnd"></div>
+
+		  		</div>
+		  	</div>
+	  	</div>
+  	</div>
+
+
+
+
+
+
+  	<div class="row-fluid bg-white shadow-sm fixed-bottom border border-left-0 border-right-0 border-bottom-0 py-2 ">
+	  	<div class="container-fluid">
+	  		<div class="row">
+
+	  			<div class="col-4 pt-1 d-flex flex-row">
+
+	  				<div class="text-center">
+		  				<button onclick="startKaraoke();" title="Play/Pause" class="btn btn-primary rounded-circle mr-2 playButton">
+		  					<span class="material-icons align-text-bottom playIcon" style="font-size: 50px">play_arrow</span>
+		  				</button>
+		  			</div>
+
+	  				<div class="text-center">
+		  				<button class="btn btn-outline-primary rounded-circle songsListBtn" title="Songs list" data-toggle="modal" data-target="#songsListModal">
+		  					<span class="material-icons align-text-bottom" style="font-size: 50px">queue_music</span>
+		  				</button>
+		  			</div>
+
+	  			</div>
+
+	  			<div class="col-4 text-center pt-1">
+            <p class="bigger-4 mb-0">Score: <span id="scoreMeter">0</span></p>
+	  				<p class="smaller-1 mb-0">Queen - I want to break free</p>
+	  			</div>
+
+	  			<div class="col-4 text-right d-flex flex-row-reverse">
+
+	  					<div class="text-center">
+	  						<button class="btn btn-outline-dark rounded-circle" title="Settings" data-toggle="modal" data-target="#settingsModal">
+			  					<span class="material-icons align-text-bottom" style="font-size: 40px">settings</span>
+			  				</button>
+			  				<p class="smaller-1 pt-1 mb-0 text-dark">Settings</p>
+	  					</div>
+	  				
+	  					<div class="text-center mr-2 d-none">
+	  						<button class="btn btn-outline-secondary rounded-circle" title="Mic list">
+			  					<span class="material-icons align-text-bottom" style="font-size: 40px">mic</span>
+			  				</button>
+			  				<p class="smaller-2 pt-1 mb-0 text-secondary">Mic list</p>
+	  					</div>	
+
+	  			</div>
+	  		</div>
+	  		
+	  	</div>
+  	</div>
+
+
+
+  	<!-- songs list Modal -->
+	<div class="modal fade" id="songsListModal" tabindex="-1" aria-labelledby="songsListModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-lg">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="songsListModalLabel">Songs list</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <p class="bigger-2 font-weight-bold">Pick a song!</p>
+	        <table class="table table-hover" id="songsTable">
+			  <thead>
+			    <tr>
+			      <th scope="col">#</th>
+			      <th scope="col">Name</th>
+			      <th scope="col">Artist</th>
+			      <th scope="col">Duration</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			    <tr>
+			      <th scope="row">1</th>
+			      <td>I want to break free</td>
+			      <td>Queen</td>
+			      <td>03:42</td>
+			    </tr>
+			    <tr>
+			      <th scope="row">2</th>
+			      <td>Come as you are</td>
+			      <td>Nirvana</td>
+			      <td>04:12</td>
+			    </tr>
+			    <tr>
+			      <th scope="row">3</th>
+			      <td>Nothing else matters</td>
+			      <td>Metalica</td>
+			      <td>03:21</td>
+			    </tr>
+			  </tbody>
+			</table>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary playSong" disabled="disabled">Play that funky music</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+
+	<!-- settings Modal -->
+	<div class="modal fade" id="settingsModal" tabindex="-1" aria-labelledby="settingsModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="settingsModalLabel">Settings</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <div class="form-group">
+			    <label for="microphoneInput">Microphone</label>
+			    <select class="form-control" id="microphoneInput">
+			      <option>iMac Microphone</option>
+			      <option>Jabra Evolve 75 Microphone</option>
+			    </select>
+			  </div>
+
+			<div class="form-group">
+				<label for="speakersOutput">Speakers</label>
+				<select class="form-control" id="speakersOutput">
+				  <option>System Default Speaker Device</option>
+				  <option>Jabra Evolve 75 Headphones</option>
+				</select>
+			</div>
+
+			<hr class="mt-4">
+
+			<div class="alert alert-secondary mt-2" role="alert">
+			  	<p class="mb-1 smaller-2">webKaraoke 🎤🔥 was built by <a href="https://github.com/thanos-n" target="_blank" title="Thanos@GitHub">Thanos Nikopoulos</a> and <a href="https://portfolio.under-the-ground.gr" target="_blank" title="Bill's portfolio">Bill Kolip</a> for the 2021/2022 <a href="https://accusonus.com" target="_blank" title="Opens accusonus' website in a new tab.">accusonus</a> company hackathon.</p>
+			</div>
+			  
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+
+    
+    <!-- <script src="https://kit.fontawesome.com/05f91be29e.js">
+    </script> -->
+    <script src="js/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/pitchdetect.js"></script>
+    <script src="js/index.js"></script>
+    <script src="js/sketch.js"></script>
+
+  </body>
+</html>
